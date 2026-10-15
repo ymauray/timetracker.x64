@@ -1,0 +1,17 @@
+{
+  "config": { "dureeJournee": 420, "pauseMinimum": 45, "seuilPause": 300, "tolerance": 300 },
+  "erreurs": [],
+  "jours": [
+    { "date": "2026-10-05", "pauseDecomptee": 45, "theorique": 420, "realise": 255 },
+    { "date": "2026-10-06", "pauseDecomptee": 0, "theorique": 420, "realise": 0 },
+    { "date": "2026-10-07", "pauseDecomptee": 0, "theorique": 420, "realise": 420 },
+    { "date": "2026-10-08", "pauseDecomptee": 45, "theorique": 420, "realise": 465 }
+  ],
+  "joursNonRenseignes": [ "2026-10-06" ],
+  "semaines": [
+    { "anneeIso": 2026, "semaineIso": 41, "lundi": "2026-10-05", "theorique": 1680, "realise": 1140, "ecartCumule": -540 }
+  ],
+  "mois": [
+    { "annee": 2026, "mois": 10, "theorique": 1680, "realise": 1140, "soldeCumule": -540, "horsTolerance": true }
+  ]
+}

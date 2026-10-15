@@ -1,0 +1,17 @@
+{
+  "config": { "dureeJournee": 492, "pauseMinimum": 30, "seuilPause": 300, "tolerance": 600 },
+  "erreurs": [
+    { "ligne": 1, "message": "Valeur invalide pour 'tolerance' dans le front-matter : 'dix heures' (format attendu ex: 8h12)." },
+    { "ligne": 7, "message": "Date invalide '31.09.2026' (format attendu jj.mm.aaaa, ex: 1.10.2026 ou 21.02.2027)." },
+    { "ligne": 8, "message": "Depart (08h00) doit etre apres Arrivee (17h00)." },
+    { "ligne": 9, "message": "Jour marque en absence mais des horaires sont renseignes : videz les colonnes horaires ou retirez le code absence." },
+    { "ligne": 10, "message": "Debut pause et Fin pause doivent etre soit tous les deux renseignes, soit tous les deux vides." },
+    { "ligne": 11, "message": "Code absence inconnu 'Vacances' (valeurs valides : Conges ou CP, Maladie, Ferie, RTT, Divers, Demi)." },
+    { "ligne": 12, "message": "Date en double : 28/09/2026 (deja presente ligne 6)." },
+    { "ligne": 13, "message": "Le code Demi demande les horaires de la demi-journee travaillee." }
+  ],
+  "jours": [],
+  "joursNonRenseignes": [],
+  "semaines": [],
+  "mois": []
+}

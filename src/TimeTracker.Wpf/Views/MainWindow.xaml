@@ -1,0 +1,173 @@
+<Window x:Class="TimeTracker.Wpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pointage" Icon="/Assets/pointage.ico" Width="480" Height="760" MinWidth="420" MinHeight="560"
+        WindowStartupLocation="CenterScreen">
+    <TabControl Margin="8" Padding="0">
+
+        <!-- POINTER -->
+        <TabItem Header="Pointer">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="20,16" DataContext="{Binding Pointer}">
+                    <TextBlock Text="{Binding DateTexte}" HorizontalAlignment="Center" Opacity="0.7" />
+                    <TextBlock Text="{Binding RealiseTexte}" FontSize="52" FontWeight="SemiBold"
+                               HorizontalAlignment="Center" Margin="0,8,0,0" />
+                    <TextBlock Text="réalisé aujourd'hui" Style="{StaticResource Legende}" HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding JourneeTexte}" Style="{StaticResource Legende}" HorizontalAlignment="Center" />
+
+                    <TextBlock Text="{Binding LibelleActionSuivante}" Style="{StaticResource Legende}"
+                               HorizontalAlignment="Center" Margin="0,24,0,4"
+                               Visibility="{Binding LibelleActionSuivante, Converter={StaticResource TexteVisible}}" />
+                    <Button Command="{Binding PointerCommand}" Content="{Binding LibelleBouton}"
+                            IsEnabled="{Binding PeutPointer}" Height="84" FontSize="24" FontWeight="SemiBold"
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                            Style="{StaticResource AccentButtonStyle}" />
+                    <TextBlock Text="{Binding Message}" Style="{StaticResource Alerte}" HorizontalAlignment="Center"
+                               Visibility="{Binding Message, Converter={StaticResource TexteVisible}}" />
+                    <TextBlock Text="Raccourci global : Ctrl + Alt + P" Style="{StaticResource Legende}"
+                               HorizontalAlignment="Center" Margin="0,8,0,0" />
+
+                    <ItemsControl ItemsSource="{Binding Pointages}" Margin="0,20,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontSize="15" HorizontalAlignment="Center" Margin="0,2" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button Content="Annuler le dernier pointage" Command="{Binding AnnulerCommand}"
+                            IsEnabled="{Binding PeutAnnuler}" HorizontalAlignment="Center" Margin="0,12,0,0" />
+
+                    <Grid Margin="0,28,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource Carte}">
+                            <StackPanel>
+                                <TextBlock Text="Semaine (hier inclus)" Style="{StaticResource Legende}" />
+                                <TextBlock Text="{Binding EcartSemaineTexte}" FontSize="26" FontWeight="SemiBold"
+                                           Foreground="{Binding EcartSemaineTon, Converter={StaticResource TonBrush}}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource Carte}">
+                            <StackPanel>
+                                <TextBlock Text="Solde cumulé" Style="{StaticResource Legende}" />
+                                <TextBlock Text="{Binding SoldeTexte}" FontSize="26" FontWeight="SemiBold"
+                                           Foreground="{Binding SoldeTon, Converter={StaticResource TonBrush}}" />
+                                <TextBlock Text="{Binding ToleranceTexte}" Style="{StaticResource Legende}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                    <TextBlock Text="{Binding AlerteTolerance}" Style="{StaticResource Alerte}"
+                               Visibility="{Binding AlerteTolerance, Converter={StaticResource TexteVisible}}" />
+                    <TextBlock Text="{Binding AlerteIncompletes}" Style="{StaticResource Alerte}"
+                               Visibility="{Binding AlerteIncompletes, Converter={StaticResource TexteVisible}}" />
+                    <TextBlock Text="Les soldes se lisent au soir d'hier : la journée en cours n'y entre pas."
+                               Style="{StaticResource Legende}" TextWrapping="Wrap" Margin="0,12,0,0" />
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+
+        <!-- HISTORIQUE -->
+        <TabItem Header="Historique">
+            <DockPanel DataContext="{Binding Historique}" Margin="12">
+                <Button DockPanel.Dock="Top" Content="+ Ajouter une journée oubliée" Click="Ajouter_Click"
+                        HorizontalAlignment="Left" Margin="0,0,0,8" />
+                <TextBlock DockPanel.Dock="Top" Text="Aucune journée pour l'instant. Pointez, ou ajoutez une journée."
+                           Style="{StaticResource Legende}" Margin="0,12"
+                           Visibility="{Binding Vide, Converter={StaticResource BoolVisible}}" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Semaines}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,14">
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="{Binding Titre}" FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding EcartTexte}" FontWeight="SemiBold" HorizontalAlignment="Right"
+                                                   Foreground="{Binding Ton, Converter={StaticResource TonBrush}}" />
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding Jours}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#22808080" BorderThickness="0,0,0,1" Padding="0,6">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="82" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="58" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding DateTexte}" VerticalAlignment="Center" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding Detail}" VerticalAlignment="Center"
+                                                                   TextTrimming="CharacterEllipsis" ToolTip="{Binding Detail}">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding EstAlerte}" Value="True">
+                                                                            <Setter Property="Foreground" Value="#D9822B" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                        <TextBlock Grid.Column="2" Text="{Binding EcartTexte}" HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Center" Margin="0,0,8,0"
+                                                                   Foreground="{Binding Ton, Converter={StaticResource TonBrush}}" />
+                                                        <Button Grid.Column="3" Content="Modifier" Padding="10,3"
+                                                                Tag="{Binding}" Click="Modifier_Click" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </TabItem>
+
+        <!-- REGLAGES -->
+        <TabItem Header="Réglages">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="20,16" DataContext="{Binding Reglages}">
+                    <TextBlock TextWrapping="Wrap" Style="{StaticResource Legende}" Margin="0,0,0,12"
+                               Text="Ces réglages valent pour tout l'historique : les modifier recalcule tous les soldes passés, comme la CLI le fait avec son front-matter unique." />
+
+                    <TextBlock Text="Durée de la journée" Margin="0,6,0,2" />
+                    <TextBox Text="{Binding DureeJournee, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="Pause minimum" Margin="0,10,0,2" />
+                    <TextBox Text="{Binding PauseMinimum, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="Seuil de pause (en dessous, la pause minimum ne s'applique pas)" Margin="0,10,0,2" TextWrapping="Wrap" />
+                    <TextBox Text="{Binding SeuilPause, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="Tolérance mensuelle (sur le solde cumulé)" Margin="0,10,0,2" />
+                    <TextBox Text="{Binding Tolerance, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content="Enregistrer les réglages" Command="{Binding EnregistrerCommand}" Margin="0,16,0,0"
+                            HorizontalAlignment="Left" Style="{StaticResource AccentButtonStyle}" Padding="16,6" />
+
+                    <Separator Margin="0,24" />
+
+                    <TextBlock Text="Échange avec la CLI" FontWeight="SemiBold" />
+                    <TextBlock TextWrapping="Wrap" Style="{StaticResource Legende}" Margin="0,4,0,8"
+                               Text="L'export produit un releve.md que la CLI TimeTracker lit tel quel. L'import reprend un releve.md existant et remplace l'historique après confirmation." />
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Exporter releve.md…" Command="{Binding ExporterCommand}" Margin="0,0,8,0" />
+                        <Button Content="Importer releve.md…" Command="{Binding ImporterCommand}" />
+                    </StackPanel>
+
+                    <TextBlock Text="{Binding Confirmation}" Margin="0,12,0,0" TextWrapping="Wrap" Foreground="#2EA043"
+                               Visibility="{Binding Confirmation, Converter={StaticResource TexteVisible}}" />
+                    <TextBlock Text="{Binding Erreur}" Margin="0,12,0,0" TextWrapping="Wrap" Foreground="#D13B30"
+                               Visibility="{Binding Erreur, Converter={StaticResource TexteVisible}}" />
+
+                    <Separator Margin="0,24,0,12" />
+                    <TextBlock Text="Données" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding CheminDonnees}" Style="{StaticResource Legende}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
+</Window>

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Pointage</AssemblyName>
+    <RootNamespace>TimeTracker.Wpf</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Icone de l'exe (Explorateur, barre des taches) ; le meme fichier est aussi embarque en ressource WPF -->
+    <ApplicationIcon>Assets\pointage.ico</ApplicationIcon>
+    <!-- ThemeMode (theme Fluent de Windows 11) est encore experimental dans WPF -->
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WinForms ne sert qu'a NotifyIcon : ses espaces de noms entreraient en conflit avec WPF -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\pointage.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TimeTracker.Core\TimeTracker.Core.csproj" />
+  </ItemGroup>
+
+</Project>
