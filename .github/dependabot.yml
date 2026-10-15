@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directories:
+      - "/src/TimeTracker.Core"
+      - "/src/TimeTracker.Wpf"
+      - "/tests/TimeTracker.Core.Tests"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
