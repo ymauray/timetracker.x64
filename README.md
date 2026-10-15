@@ -1,5 +1,9 @@
 # Pointage
 
+[![CI](https://github.com/ymauray/timetracker.x64/actions/workflows/ci.yml/badge.svg)](https://github.com/ymauray/timetracker.x64/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/ymauray/timetracker.x64)](https://github.com/ymauray/timetracker.x64/releases/latest)
+[![Licence MIT](https://img.shields.io/github/license/ymauray/timetracker.x64)](LICENSE)
+
 Application Windows de pointage des heures de travail, compagne de la CLI [TimeTracker](https://github.com/ymauray/timetracker) et de l'app iPhone [Pointage](https://github.com/ymauray/timetracker.ios). Un bouton enregistre l'heure courante et en déduit l'arrivée, la pause ou le départ ; l'application applique les calculs de la CLI et affiche les soldes de la semaine et du mois. Aucune donnée ne quitte l'ordinateur.
 
 ## Fonctionnalités
