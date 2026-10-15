@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+# Le défaut du dépôt est la lecture seule : seule la publication de la release écrit.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Version depuis le tag
+        id: version
+        shell: bash
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Test
+        run: dotnet test -c Release
+
+      - name: Publier l'exécutable autonome
+        run: dotnet publish src/TimeTracker.Wpf -p:PublishProfile=win-x64 -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Créer la release GitHub
+        shell: bash
+        run: gh release create "${{ github.ref_name }}" publish/win-x64/Pointage.exe --title "${{ github.ref_name }}" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
