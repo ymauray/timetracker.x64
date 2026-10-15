@@ -56,6 +56,16 @@ tests/TimeTracker.Core.Tests/   tests xUnit et fixtures partagées avec la CLI
 
 `TimeTracker.Core` reprend le calcul de la CLI et ne dépend pas de WPF.
 
+## Intégration continue et releases
+
+Tout passe par GitHub Actions ; aucun outil externe n'intervient.
+
+- [`ci.yml`](.github/workflows/ci.yml) : sur chaque push et chaque pull request vers `main`, restaure, compile en Release et lance les tests sur `windows-latest` (l'application est en WPF). Le job `build-test` est requis pour merger dans `main`.
+- [`release.yml`](.github/workflows/release.yml) : sur un tag `vX.Y.Z`, relance les tests, publie `Pointage.exe` (autonome, un seul fichier) et crée la release GitHub avec ses notes. La version de l'exécutable vient du tag.
+- [`dependabot.yml`](.github/dependabot.yml) : mises à jour hebdomadaires des paquets NuGet et des actions GitHub.
+
+Pour publier une version : `git tag v0.1.0 && git push origin v0.1.0`. Tout ce qui précède le tag (build, tests, revue) est fait par la CI du dépôt ; la publication de l'exécutable et de la release l'est aussi, il n'y a pas de frontière avec un service tiers.
+
 ## Contribuer
 
 Voir [CONTRIBUTING.md](CONTRIBUTING.md). Une question ? Voir [SUPPORT.md](.github/SUPPORT.md).
