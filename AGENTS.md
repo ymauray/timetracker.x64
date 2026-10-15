@@ -6,6 +6,8 @@ Instructions pour les assistants IA travaillant sur ce dépôt.
 
 Pointage est une application Windows (WPF, .NET 10) de pointage des heures de travail. Un bouton enregistre l'heure courante et en déduit arrivée, début de pause, fin de pause ou départ ; l'application affiche les soldes de la semaine et du mois. Elle applique exactement les calculs de la CLI [TimeTracker](https://github.com/ymauray/timetracker) et échange avec elle par un fichier `releve.md`. L'app iPhone [timetracker.ios](https://github.com/ymauray/timetracker.ios) en est la sœur. Aucune donnée ne quitte l'ordinateur.
 
+L'état d'avancement, les décisions prises et ce qui reste à faire sont dans [`AVANCEMENT.md`](AVANCEMENT.md) : le lire avant de reprendre le travail.
+
 ## Structure
 
 ```
